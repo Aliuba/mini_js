@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let url = new URL(location.href)
+    let url1 = new URL("https://jsonplaceholder.typicode.com/posts");
+
+    console.log(url);
+    let post = JSON.parse(url.searchParams.get('postID'))
+    console.log(post)
+
+    let ul = document.createElement('ul');
+    document.body.appendChild(ul)
+    for (const key in post) {
+        let li = document.createElement('li');
+        li.innerText = `${JSON.stringify(post[key])}`;
+        ul.appendChild(li);
+    }
+    fetch(url1 + '/' + post.id + '/comments').then(res => res.json()).then((items) => {
+        console.log(items)
+
+        for (const item of items) {
+
+            let p = document.createElement('p');
+
+
+            document.body.append(p);
+            p.innerText = `${item.body}`;
+
+    }})
+</script>
+
+</body>
+</html>

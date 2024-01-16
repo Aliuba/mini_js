@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<hr>
+<a href="index.html">TO HOME </a>
+<hr>
+<h2>DETAILS PAGE</h2>
+<hr>
+<script>
+    let url = new URL(location.href)
+    let url1 = new URL("https://jsonplaceholder.typicode.com/users");
+    console.log(url);
+    let user = JSON.parse(url.searchParams.get('userID'))
+    console.log(user)
+
+    let div=document.createElement('div')
+    let ul = document.createElement('ul');
+    document.body.appendChild(div)
+    div.appendChild(ul)
+    div.style.backgroundColor = "pink"
+
+    for (const key in user) {
+        let li = document.createElement('li');
+        li.innerText = `${JSON.stringify(user[key])}`;
+        ul.appendChild(li);
+    }
+
+    let btn = document.createElement('button');
+    document.body.appendChild(btn)
+    btn.innerText='post of current user'
+    btn.style.width='90vw'
+    btn.style.marginTop ="50%"
+
+    btn.addEventListener('click', () => {
+                   fetch(url1 + '/' + user.id + '/posts').then(res => res.json()).then((items) => {
+                console.log(items)
+
+                for (const item of items) {
+
+                    let p = document.createElement('p');
+                    let btn = document.createElement('button');
+
+                    document.body.append(p, btn);
+                    p.innerText = `${item.title}`;
+                    btn.innerText='post-details'
+                    btn.addEventListener('click', () => {
+                        document.location.href = `post-details.html?postID=` + JSON.stringify(item);
+                    })
+                }
+
+            })
+
+        })
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let url = new URL("https://jsonplaceholder.typicode.com/users");
+    console.log(url);
+
+    let div = document.createElement('div');
+
+
+    document.body.appendChild(div)
+
+    fetch(url).then(res => res.json()).then((items) => {
+
+        for (const item of items) {
+
+            let p = document.createElement('p');
+            let btn = document.createElement('button');
+            let div1 = document.createElement('div')
+            div1.style.backgroundColor='#715caf'
+            div.append(div1)
+            div1.append(p, btn);
+            p.innerText = `${item.id}- ${item.name}`;
+            p.style.marginTop = "10px"
+            p.style.backgroundColor = '#c9b4b4'
+            btn.innerText = `DETAILS`;
+
+
+            btn.addEventListener('click', () => {
+                document.location.href = `user-details.html?userID=` + JSON.stringify(item);
+            })
+        }
+
+    })
+</script>
+</body>
+</html>
